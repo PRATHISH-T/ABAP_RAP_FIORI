@@ -1,0 +1,59 @@
+managed implementation in class ZBP_R_BOOKINGS_01 unique;
+strict ( 2 );
+with draft;
+extensible;
+define behavior for ZR_BOOKINGS_01 alias ZrBookings01
+persistent table ZBOOKINGS_01
+extensible
+draft table ZBOOKINGS_01_D
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master( global )
+{
+  field ( readonly )
+DistinationCity,
+   BookingID,
+   CreatedAt,
+   CreatedBy,
+   LastChangedAt,
+   LastChangedBy,
+   LocalLastChangedAt;
+
+  field ( numbering : managed )
+   BookingID;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+validation idvalidation on save { create; update; field AirportFromID ; field AirportToID; }
+validation invaliddate on save { create; update; field StartDate ; field EndDate;}
+validation statusconfirmation on save { create; update; }
+determination satausnew on modify{ create;}
+determination gettingcity on modify { field AirportToID ; }
+
+  mapping for ZBOOKINGS_01 corresponding extensible
+  {
+    BookingID = BOOKING_ID;
+    CarrierID = CARRIER_ID;
+    ConnectionID = CONNECTION_ID;
+    AirportFromID = AIRPORT_FROM_ID;
+    AirportToID = AIRPORT_TO_ID;
+    DistinationCity = DISTINATION_CITY;
+    StartDate = START_DATE;
+    EndDate = END_DATE;
+    Status = STATUS;
+    CreatedAt = CREATED_AT;
+    CreatedBy = CREATED_BY;
+    LastChangedAt = LAST_CHANGED_AT;
+    LastChangedBy = LAST_CHANGED_BY;
+    LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+  }
+
+}

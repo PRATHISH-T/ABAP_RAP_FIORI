@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_BOOKINGS_01'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_BOOKINGS_01'
+  }
+}
+define service ZUI_BOOKINGS_01_O4 provider contracts odata_v4_ui {
+  expose ZC_BOOKINGS_01;
+}
